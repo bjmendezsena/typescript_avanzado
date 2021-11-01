@@ -2,7 +2,7 @@
 
 ## Alias
 
-**Un alias es para renombrar un tipadocomplejo que se repite muchas veces.**
+**Un alias es para renombrar un tipado complejo que se repite muchas veces.**
 
 Se puede poner un alias en tipos sencillos tales como:
 
