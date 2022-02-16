@@ -199,7 +199,43 @@ getValue(obj, 'name'); // Lewis
 getValue(arr, '0'); // Fisrt item
 
 getValue(arr, '0.name'); // Lewis
+```
 
+Te devuelve el elemento del array que haga match con la key y el value que le pasas por parámetro:
 
+```
+const findByKey = (array, key, value) => {
+  for (let i = 0; i < array.length; i++) {
+    if (array[i][key].toLowerCase() === value.toLowerCase()) {
+      return array[i];
+    }
+  }
+  return null;
+};
+```
+
+- Modo de uso:
+
+```
+const arr2 = [
+  {
+    name: "Luis",
+    lastName: "Gonzalez",
+  },
+  {
+    name: "David",
+    lastName: "Jimenez",
+  },
+  {
+    name: "Juan",
+    lastName: "Perez",
+  },
+  {
+    name: "Juan",
+    lastName: "Perez",
+  },
+];
+
+findByKey(arr2, "name", "Juan"); // { name: 'Juan', lastName: 'Perez' }
 
 ```
