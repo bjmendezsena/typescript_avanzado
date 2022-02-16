@@ -235,3 +235,45 @@ const arr2 = [
 findByKey(arr2, "name", "Juan"); // { name: 'Juan', lastName: 'Perez' }
 
 ```
+
+
+Te devuelve los elementos del array que haga match con la key y el value que le pasas por parámetro:
+
+```
+const findItemsByKey = (array, key, value) => {
+  const result = [];
+  for (let i = 0; i < array.length; i++) {
+    if (array[i][key].toLowerCase() === value.toLowerCase()) {
+      result.push(array[i]);
+    }
+  }
+  return result;
+}
+```
+
+- Modo de uso:
+
+```
+const arr2 = [
+  {
+    name: "Luis",
+    lastName: "Gonzalez",
+  },
+  {
+    name: "David",
+    lastName: "Jimenez",
+  },
+  {
+    name: "Juan",
+    lastName: "Perez",
+  },
+  {
+    name: "Juan",
+    lastName: "Perez",
+  },
+];
+
+findItemsByKey(arr2, "name", "Juan"); // [{ name: 'Juan', lastName: 'Perez' }, { name: 'Juan', lastName: 'Perez' }]
+
+```
+
