@@ -230,10 +230,6 @@ const arr2 = [
     name: "Juan",
     lastName: "Perez",
   },
-  {
-    name: "Juan",
-    lastName: "Perez",
-  },
 ];
 
 findByKey(arr2, "name", "Juan"); // { name: 'Juan', lastName: 'Perez' }
