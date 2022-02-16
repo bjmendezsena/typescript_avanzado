@@ -155,3 +155,51 @@ type Weekend = Extract<WeekDay, "sab" | "dom">;
  */
 
 ```
+
+
+# Funciones avanzadas
+
+Te devuelve cualquier propiedad de un objeto o elemento de un array
+
+```
+const getValue = (source, key) => {
+  const arrKeys = key.split(".");
+  const firstKey = arrKeys.shift();
+  const { [firstKey]: newSource = undefined } = source;
+
+  if (arrKeys.length > 0) {
+    return getValue(newSource || {}, arrKeys.join("."));
+  }
+
+  return newSource;
+};
+```
+- Modo de uso:
+```
+
+const obj = {
+  name:'Lewis',
+  lastname:'Lopez',
+}
+
+const arr = [
+  {
+    name:'Lewis',
+    lastname:'Lopez',
+  },
+  {
+    name:'Leinor',
+    lastname:'Lopez',
+  },
+]
+
+
+getValue(obj, 'name'); // Lewis
+
+getValue(arr, '0'); // Fisrt item
+
+getValue(arr, '0.name'); // Lewis
+
+
+
+```
