@@ -277,3 +277,112 @@ findItemsByKey(arr2, "name", "Juan"); // [{ name: 'Juan', lastName: 'Perez' }, {
 
 ```
 
+
+
+# Función para generar traducciones desde un csv en node
+
+Se requieren la dependencia ```npm i csv-parser```
+
+```
+const csv = require("csv-parser");
+const fs = require("fs");
+
+// Para generar algún error en caso de que sea necesario
+const throwWarning = (require = false, message = "") => {
+  if (require) throw new Error(message);
+};
+
+// Para crear un objeto json a partir de unas keys dadas, el valor y un objeto previo
+
+const createJsonObject = (key = "", value = "", source = {}) => {
+  const arrKeys = key.split(".");
+  const firstKey = arrKeys.shift();
+  const { [firstKey]: newSource = {} } = source;
+
+  if (arrKeys.length > 0) {
+    return {
+      [firstKey]: {
+        ...(newSource || {}),
+        ...createJsonObject(arrKeys.join("."), value, newSource),
+      },
+    };
+  }
+
+  return {
+    ...(newSource || {}),
+    [firstKey]: value,
+  };
+};
+
+
+// Para vberificar si es un csv válido
+const checkIfIsCsvFile = (
+  sourcePath = throwWarning(true, "sourcePath argument is required")
+) => {
+  if (!fs.existsSync(sourcePath)) {
+    return {
+      error: true,
+      message: `[${sourcePath}] file does not exist`,
+    };
+  }
+
+  const file = fs.readFileSync(sourcePath);
+  const fileContent = file.toString();
+  const isSplittedByComma = fileContent.split(",").length > 1;
+
+  if (!fileContent.includes("\n")) {
+    return {
+      error: true,
+      message: `[${sourcePath}] file is not a csv file`,
+    };
+  }
+
+  if (!isSplittedByComma) {
+    return {
+      error: true,
+      message: `[${sourcePath}] is not splitted by comma`,
+    };
+  }
+
+  return {
+    error: false,
+    message: `[${sourcePath}] is a csv file`,
+  };
+};
+
+
+// Función para crear el csv
+const generateObjFromCsv = (
+  sourcePath = throwWarning(true, "sourcePath argument is required")
+) => {
+  const { error, message } = checkIfIsCsvFile(sourcePath);
+
+  if (error) {
+    return throwWarning(true, message);
+  }
+
+  fs.createReadStream(sourcePath)
+    .pipe(csv())
+    .on("data", (data) => {
+      const { key, ...rest } = data;
+      const langs = [...new Set(Object.keys(rest))];
+
+      langs.forEach((lang) => {
+        const translationsObj = require(`../src/translations/${lang}/${lang}.json`);
+        const jsonObj = {
+          ...translationsObj,
+          ...createJsonObject(key, rest[lang], translationsObj),
+        };
+
+        fs.writeFileSync(
+          `src/translations/${lang}/${lang}.json`,
+          JSON.stringify(jsonObj, null, 2)
+        );
+      });
+    });
+};
+
+
+```
+
+
