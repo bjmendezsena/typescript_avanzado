@@ -386,3 +386,35 @@ const generateObjFromCsv = (
 ```
 
 
+# Patrón de diseño compound-component
+```
+import { FC, PropsWithChildren } from "react";
+import { Navbar } from "./Navbar/Navbar";
+import { Content } from "./Content/Content";
+import { Sidebar } from "./Sidebar/Sidebar";
+import { Layout as LayoutHOC } from "./Layout/Layout";
+export * from "./Layout/Layout";
+export interface LayoutHocProps<T = {}> {
+  (props: PropsWithChildren<T>): JSX.Element | null;
+  Navbar: FC<PropsWithChildren<T>>;
+  Content: FC<PropsWithChildren<T>>;
+  Sidebar: FC<PropsWithChildren<T>>;
+}
+
+const Layout: LayoutHocProps = Object.assign(LayoutHOC, {
+  Navbar,
+  Content,
+  Sidebar,
+});
+
+export default Layout;
+
+
+<Layout>
+      <Layout.Navbar />
+      <Layout.Sidebar />
+      <Layout.Content />
+</Layout>
+```
+
+
