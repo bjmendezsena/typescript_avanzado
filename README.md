@@ -425,7 +425,8 @@ Sirve para cambiar de posiciones los elementos dentro de un array:
 ```
 const arr = [5,8];
 [arr[0], arr[1]] = [arr[1], arr[0]];
-console.log(arr) //(2) [8, 5] 
+console.log(arr)
+Salida: [8, 5]
 ```
 
 
