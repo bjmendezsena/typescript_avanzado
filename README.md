@@ -431,3 +431,48 @@ Salida: [8, 5]
 
 
 
+# Generar getters y setters con decoradores
+
+```
+import { capitalize } from "lodash";
+
+const Getters = () => <T extends {new(...args:any[]):{}}>(constructor:T) => {
+  return class extends constructor {
+    constructor(...args: any[]) {
+      super(...args);
+      const props = Reflect.ownKeys(this);
+      props.forEach((prop: string) => {
+        const capitalizedKey = capitalize(prop);
+        const methodName = `get${capitalizedKey}`;
+        Object.defineProperty(this, methodName, { value: () => this[prop] });
+      });
+    }
+  }
+}
+const Setters = () => <T extends {new(...args:any[]):{}}>(constructor:T) => {
+  return class extends constructor {
+    constructor(...args: any[]) {
+      super(...args);
+      const props = Reflect.ownKeys(this);
+      props.forEach((prop: string) => {
+        const capitalizedKey = capitalize(prop);
+        const methodName = `set${capitalizedKey}`;
+        Object.defineProperty(this, methodName, { value: (newValue: any) => { this[prop] = newValue } });
+      });
+    }
+  }
+}
+
+@Getters()
+@Setters()
+export class Person {
+  [x: string]: any;
+  nom: string;
+  prenom: string;
+
+  constructor(nom: string, prenom: string) {
+    this.nom = nom;
+    this.prenom = prenom;
+  }
+}
+```
