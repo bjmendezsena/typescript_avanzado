@@ -476,3 +476,23 @@ export class Person {
   }
 }
 ```
+
+
+# Sobrecarga de funciones
+
+Este es un ejemplo de sobrecarga de funciones en TypeScript.
+
+```
+function loMismo(param: string): string;
+function loMismo(param: number): number;
+function loMismo(param: any): any {
+  return param;
+}
+
+const result = loMismo("hola"); // result: string
+const result2 = loMismo(2); // result: number
+```
+
+La función loMismo está definida tres veces: dos veces con una firma que especifica el tipo de parámetro y el tipo de valor de retorno, y una vez con una implementación genérica que toma cualquier tipo de parámetro y devuelve el mismo tipo de valor.
+
+La idea detrás de la sobrecarga de funciones es permitir que una función acepte diferentes tipos de parámetros y proporcione una respuesta apropiada para cada tipo de entrada. En este caso, la función loMismo puede tomar una cadena o un número como entrada y simplemente devolver esa entrada sin modificarla.
