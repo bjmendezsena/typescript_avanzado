@@ -1,5 +1,7 @@
 # Typescript nivel avanzado
 
+<details>
+  <summary>Alias</summary>
 ## Alias
 
 **Un alias es para renombrar un tipado complejo que se repite muchas veces.**
@@ -40,20 +42,12 @@ const reducer: ReducerFunction<State> = (
   return { ...prevState, ...update };
 };
 ```
+</details>
 
-## Intersección
+  
 
-Sirve para convinar múltiples tipos en uno solo
-
-```
-const compose = <A, B>(a: A, b: B): A & B => ({ ...a, ...b });
-
-const cat = compose({ type: "Feline" }, { skill: "hunting" });
-
-console.log(cat); // {type: "Feline",skill:"hunting" }
-
-```
-
+<details>
+  <summary>Mapped types</summary>
 ## Mapped types
 
 ```
@@ -78,87 +72,17 @@ const transformation: Evolver<ProductItem> = {
 };
 
 ```
+</details>
 
-## Tipos condicionales
 
-Sirve para devolver un tipo de dato condicionalmente
-
-```
-type DarkColors = "black" | "grey";
-type LightColors = "white" | "yellow" | "pink";
-
-type Status = "sad" | "happy";
-
-type Pallete<T extends Status> = T extends "sad" ? DarkColors : LightColors;
-```
-
----
-
-# TIPOS GENÉRICOS DE UTILIDADES
-
-## Partial
-
-Nos permite convertir en opcionales las propiedades de una interfaz.
-
-```
-interface Person {
-    name: string;
-    age: number;
-}
-
-type PartialPerson = Partial<Person>;
-/**
- * type PartialPerson = {
-    name?: string;
-    age?: number;
-}
-*/
-```
-
-## required
-
-Al contrario de partial, nos permite hacer obligatorias las propiedades de un objeto
-
-```
-interface Coords {
-  x: number;
-  y: number;
-  z?: number;
-}
-
-type Coord3D = Required<Coords>;
-
-/**
- * type Coord3D = {
-    x: number;
-    y: number;
-    z: number;
-}
- */
-
-```
-
-## Exclude y Extract
-
-Sirve para extraer propiedades de un tipe
-
-```
-type WeekDay = "lun" | "mar" | "mie" | "jue" | "vie" | "sab" | "dom";
-type WorkDay = Exclude<WeekDay, "sab" | "dom">;
- 
- //  WorkDay typeof "lun" | "mar" | "mie" | "jue" | "vie" | "sab" | "dom"
- 
-
-type Weekend = Extract<WeekDay, "sab" | "dom">;
-/**
- * Weekend typeof  "sab" | "dom"
- */
-
-```
 
 
 # Funciones avanzadas
 
+  
+  
+<details>
+  <summary>getValue from object</summary>
 Te devuelve cualquier propiedad de un objeto o elemento de un array
 
 ```
@@ -200,7 +124,12 @@ getValue(arr, '0'); // Fisrt item
 
 getValue(arr, '0.name'); // Lewis
 ```
-
+  
+</details>
+  
+  
+<details>
+  <summary>findByKey from object</summary>
 Te devuelve el elemento del array que haga match con la key y el value que le pasas por parámetro:
 
 ```
@@ -235,8 +164,11 @@ const arr2 = [
 findByKey(arr2, "name", "Juan"); // { name: 'Juan', lastName: 'Perez' }
 
 ```
+                                   
+</details>
 
-
+<details>
+  <summary>findItemsByKey from object</summary>
 Te devuelve los elementos del array que haga match con la key y el value que le pasas por parámetro:
 
 ```
@@ -276,8 +208,11 @@ const arr2 = [
 findItemsByKey(arr2, "name", "Juan"); // [{ name: 'Juan', lastName: 'Perez' }, { name: 'Juan', lastName: 'Perez' }]
 
 ```
+</details>
 
 
+ <details>
+  <summary>Función para generar traducciones desde un csv en node</summary>
 
 # Función para generar traducciones desde un csv en node
 
@@ -384,8 +319,12 @@ const generateObjFromCsv = (
 
 
 ```
+   
+</details>
 
 
+<details>
+  <summary>Patrón de diseño compound-component</summary>
 # Patrón de diseño compound-component
 ```
 import { FC, PropsWithChildren } from "react";
@@ -416,8 +355,12 @@ export default Layout;
       <Layout.Content />
 </Layout>
 ```
+</details>
 
-
+  
+  
+<details>
+  <summary>Mix de javascript (ES6)</summary>
 # Mix de javascript (ES6)
 
 Sirve para cambiar de posiciones los elementos dentro de un array:
@@ -428,9 +371,10 @@ const arr = [5,8];
 console.log(arr)
 Salida: [8, 5]
 ```
+</details>
 
-
-
+<details>
+  <summary>Generar getters y setters con decoradores</summary>
 # Generar getters y setters con decoradores
 
 ```
@@ -477,7 +421,10 @@ export class Person {
 }
 ```
 
-
+</details>
+  
+<details>
+  <summary>Sobrecarga de funciones</summary>
 # Sobrecarga de funciones
 
 Este es un ejemplo de sobrecarga de funciones en TypeScript.
@@ -496,3 +443,4 @@ const result2 = loMismo(2); // result: number
 La función loMismo está definida tres veces: dos veces con una firma que especifica el tipo de parámetro y el tipo de valor de retorno, y una vez con una implementación genérica que toma cualquier tipo de parámetro y devuelve el mismo tipo de valor.
 
 La idea detrás de la sobrecarga de funciones es permitir que una función acepte diferentes tipos de parámetros y proporcione una respuesta apropiada para cada tipo de entrada. En este caso, la función loMismo puede tomar una cadena o un número como entrada y simplemente devolver esa entrada sin modificarla.
+</details>
