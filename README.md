@@ -450,6 +450,7 @@ La idea detrás de la sobrecarga de funciones es permitir que una función acept
   
 # Obtener el valor de un objeto
 
+```
 
 type PathValue<T, P extends string> = P extends `${infer Key}.${infer Rest}`
   ? Key extends keyof T
@@ -500,7 +501,7 @@ const obj = {
 };
 
 const child = getValue(obj, "children.child.juegos.juego2");
-
+```
 
 
 </details>
