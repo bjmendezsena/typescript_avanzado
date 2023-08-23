@@ -444,3 +444,63 @@ La función loMismo está definida tres veces: dos veces con una firma que espec
 
 La idea detrás de la sobrecarga de funciones es permitir que una función acepte diferentes tipos de parámetros y proporcione una respuesta apropiada para cada tipo de entrada. En este caso, la función loMismo puede tomar una cadena o un número como entrada y simplemente devolver esa entrada sin modificarla.
 </details>
+
+<details>
+  <summary>Funcion getKey con tipado en typescript</summary>
+  
+# Obtener el valor de un objeto
+
+
+type PathValue<T, P extends string> = P extends `${infer Key}.${infer Rest}`
+  ? Key extends keyof T
+    ? Rest extends PathValue<T[Key], Rest>
+      ? T[Key]
+      : never
+    : never
+  : P extends keyof T
+  ? T[P]
+  : never;
+  
+
+type Path<T> = {
+  [K in keyof T]: K extends string ? `${K}.${Path<T[K]> & string}` | K : never;
+}[keyof T] &
+  string;
+  
+
+export const getValue = <T, P extends Path<T>>(
+  source: T,
+  key: P
+): PathValue<T, P> => {
+  const arrKeys = key.split(".") as string[];
+  const firstKey = arrKeys.shift() || "";
+  const newSource: any = source[firstKey as keyof typeof source];
+
+  if (arrKeys.length > 0) {
+    return getValue(newSource, arrKeys.join(".") as Path<any>);
+  }
+
+  return newSource;
+};
+
+
+## Uso
+
+const obj = {
+  age: 1,
+  name: 3,
+  children: {
+    child: {
+      juegos: {
+        juego1: "juego1",
+        juego2: "juego2",
+      },
+    },
+  },
+};
+
+const child = getValue(obj, "children.child.juegos.juego2");
+
+
+
+</details>
