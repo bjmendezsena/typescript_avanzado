@@ -501,6 +501,7 @@ const obj = {
 };
 
 const child = getValue(obj, "children.child.juegos.juego2");
+
 ```
 
 
