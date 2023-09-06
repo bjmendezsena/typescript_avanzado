@@ -97,6 +97,17 @@ const getValue = (source, key) => {
 
   return newSource;
 };
+
+
+
+// La misma funcion pero en versión corta
+
+
+export function _get(object: any, path: string, defaultValue?: string) {
+  return path.split('.').reduce((o, p) => (o ? o[p] : defaultValue), object);
+}
+
+
 ```
 - Modo de uso:
 ```
